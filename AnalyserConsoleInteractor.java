@@ -23,13 +23,32 @@ public class AnalyserConsoleInteractor {
 	        
 	    }
 	    
-	    public static void main(String[] args) {
+	  /*  public static void main(String[] args) {
 			try {
-				findBugCommand("com.philips.casestudy");
+				pmdCommand("com.philips.casestudy");
 			} catch (Exception e) {
 				
 				e.printStackTrace();
 			}
-		}
+		}*/
+	    
+	   public static void pmdCommand(String projectName) throws IOException
+	   {
+			ProcessBuilder folderChange = new ProcessBuilder("cmd.exe","/c","cd C:\\Users\\320066613\\pmd-bin-6.16.0\\bin",
+					"& pmd -d \"C:\\Users\\320066613\\eclipse-workspace\\"+projectName+"\""
+					+ " -f xml -R rulesets/java/quickstart.xml> C:\\Users\\320066613\\CodeAnalysis\\XMLfiles\\"+projectName+".xml");
+			        folderChange.redirectErrorStream(true);
+			        Process p = folderChange.start();
+			        BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
+			        String line;
+			        while (true) {
+			            line = r.readLine();
+			            if (line == null) { break; }
+			            System.out.println(line);
+			        }
+			        
+	   }
+			    
 	}
+	
 
