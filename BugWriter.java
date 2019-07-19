@@ -10,10 +10,11 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class BugWriter {
+	static XSSFWorkbook workbook = new XSSFWorkbook();
 	public static void writeFindBugsData(ArrayList<FindBugsData> buglist, String Classname, String name)
 			throws Exception {
 		try {
-			XSSFWorkbook workbook = new XSSFWorkbook();
+			
 			XSSFSheet sheet = workbook.createSheet("Findbugs");
 			Map<Integer, Object[]> data = new TreeMap<>();
 			data.put(1, new Object[] { "Class Name", "Error Category", "Error Type" });
@@ -36,11 +37,9 @@ public class BugWriter {
 			}
 
 			FileOutputStream out = new FileOutputStream(
-					new File("C:\\Users\\320065410\\OneDrive - Philips\\Desktop\\Reports\\finalreport\\" + Classname
-							+ name + ".xlsx"));
+					new File("C:\\Users\\320065410\\OneDrive - Philips\\Desktop\\Reports\\finalreport\\" + Classname+ ".xlsx"));
 			workbook.write(out);
 			out.close();
-			workbook.close();
 
 		}
 
@@ -52,7 +51,6 @@ public class BugWriter {
 	public static void writePmdData(ArrayList<PmdData> buglist, String Classname, String name) throws Exception {
 		try {
 
-			XSSFWorkbook workbook = new XSSFWorkbook();
 			XSSFSheet sheet = workbook.createSheet("PMD");
 			Map<Integer, Object[]> data = new TreeMap<>();
 			data.put(1, new Object[] { "Class Name","Line Number", "RuleSet", "Error" });
@@ -75,8 +73,7 @@ public class BugWriter {
 			}
 
 			FileOutputStream out = new FileOutputStream(
-					new File("C:\\Users\\320065410\\OneDrive - Philips\\Desktop\\Reports\\finalreport\\" + Classname
-							+ name + ".xlsx"));
+					new File("C:\\Users\\320065410\\OneDrive - Philips\\Desktop\\Reports\\finalreport\\" + Classname+".xlsx"));
 			workbook.write(out);
 			out.close();
 			workbook.close();
