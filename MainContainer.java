@@ -1,21 +1,30 @@
 package com.philips.casestudy;
+
 import java.util.Scanner;
+import com.philips.casestudy.AnalyserConsoleInteractor;
 
-public class MainContainer<T> {
-	
-	public static void main(String[] args) {
+public class MainContainer {
 
+	public static void main(String[] args) throws Exception {
+
+		String projectname;
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Enter the Project name:");
-		String projectname = sc.next();
-		System.out.println("Enter the Code Analyser:\n1. FindBugs\n2. PMD");
-		String option = sc.next().toLowerCase();
-			try {
-				AnalyserConsoleInteractor.findBugCommand(projectname,option);
+		System.out.println("Enter the Project name");
+		projectname = sc.next();
+		try {
+			AnalyserConsoleInteractor.CreateXmlFile(Commands.GetFindbugCommand(projectname), Commands.FindBugsBinPath);
+			Bugs<FindBugsData> findbugs=new StaticToolBugs<>();
+			findbugs.getBugs(projectname, "findbugs");
+			findbugs.writeData(projectname, "findbugs");
 			
-			}catch (Exception e) {
-				e.printStackTrace();
-			}
+			AnalyserConsoleInteractor.CreateXmlFile(Commands.GetPmdCommand(projectname), Commands.PmdBinPath);
+			Bugs<PmdData> pmd=new StaticToolBugs<>();
+			pmd.getBugs(projectname, "pmd");
+			pmd.writeData(projectname, "pmd");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		sc.close();
 	}
