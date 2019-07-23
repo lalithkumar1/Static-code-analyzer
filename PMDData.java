@@ -1,49 +1,31 @@
 package com.philips.casestudy;
 
-public class PmdData {
+public class PMDData {
+	String issue;
+	String data;
 	String className;
-	String ruleSet;
-	String rule;
-	String content;
-	String line;
 
-	public void setruleSet(String type) {
-		this.ruleSet = type;
+	public String getIssue() {
+		return issue;
 	}
 
-	public void setrule(String category) {
-		this.rule = category;
-	}
-
-	public void setClassName(String className) {
-		this.className = className;
-	}
-	
-	public void setContent(String className) {
-		this.content = className;
-	}
-
-	public String getrule() {
-		return rule;
-	}
-
-	public String getruleSet() {
-		return ruleSet;
+	public String getData() {
+		return data;
 	}
 
 	public String getClassName() {
 		return className;
 	}
 
-	public String getContent() {
-		return content;
+	public void setIssue(String issue) {
+		this.issue = issue;
 	}
 
-	public String getLine() {
-		return line;
+	public void setData(String data) {
+		this.data = data;
 	}
 
-	public void setLine(String string) {
-		this.line = string;
+	public void setClassName(String className) {
+		this.className = className;
 	}
 }
