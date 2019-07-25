@@ -1,6 +1,6 @@
 package com.philips.casestudy;
 
-public class FindBugsData {
+class FindBugsData {
 	String type;
 	String category;
 	String className;

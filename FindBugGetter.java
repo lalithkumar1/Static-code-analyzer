@@ -10,23 +10,21 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-public class FindBugGetter {
+class FindBugGetter {
 
 	public static void getBugs(String projectName, String analyserName) {
 
 		try {
-
-			File fXmlFile = new File(
-					"C:\\Users\\320066613\\CodeAnalysis\\XMLfiles\\" + projectName + "-" + analyserName + ".xml");
+			File fXmlFile = new File(Commands.destinationPath + projectName + analyserName+".xml");
+			if(fXmlFile.exists()) {
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(fXmlFile);
+			
 			doc.getDocumentElement().normalize();
-			System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 			if (analyserName.compareToIgnoreCase("findbugs") == 0) {
 				BugWriter<FindBugsData> bg = new BugWriter<FindBugsData>();
 				ArrayList<FindBugsData> buglist = new ArrayList<FindBugsData>();
-
 				NodeList nList = doc.getElementsByTagName("BugInstance");
 
 				for (int temp = 0; temp < nList.getLength(); temp++) {
@@ -44,11 +42,11 @@ public class FindBugGetter {
 			}
 
 			else if (analyserName.compareToIgnoreCase("pmd") == 0) {
-				BugWriter<PMDData> bg = new BugWriter<PMDData>();
-				ArrayList<PMDData> buglist = new ArrayList<PMDData>();
+				BugWriter<PmdData> bg = new BugWriter<PmdData>();
+				ArrayList<PmdData> buglist = new ArrayList<PmdData>();
 				NodeList nList = doc.getElementsByTagName("file");
 				for (int temp = 0; temp < nList.getLength(); temp++) {
-					PMDData f = new PMDData();
+					PmdData f = new PmdData();
 					Node nNode = nList.item(temp);
 					if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 						Element eElement = (Element) nNode;
@@ -56,14 +54,20 @@ public class FindBugGetter {
 						for (int count = 0; count < violations.getLength(); count++) {
 							Node violationNode = violations.item(count);
 							eElement = (Element) violationNode;
-							((PMDData) f).setClassName(eElement.getAttribute("class"));
-							((PMDData) f).setIssue(eElement.getAttribute("rule"));
-							((PMDData) f).setData(eElement.getTextContent());
+							f.setClassName(eElement.getAttribute("class"));
+							f.setruleSet(eElement.getAttribute("ruleset"));
+							f.setrule(eElement.getAttribute("rule"));
+							f.setLine(eElement.getAttribute("beginline"));
+							f.setContent(eElement.getTextContent());
 							buglist.add(f);
 						}
 					}
 				}
 				bg.writeData(buglist, projectName, analyserName);
+			}
+			}
+			else {
+				System.out.println(analyserName+" file is not created");
 			}
 		}
 
