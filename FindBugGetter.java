@@ -1,4 +1,4 @@
-package com.philips.casestudy;
+
 
 import java.io.File;
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ class FindBugGetter {
 	public static void getBugs(String projectName, String analyserName) {
 
 		try {
-			File fXmlFile = new File(Commands.destinationPath + projectName + analyserName+".xml");
+			File fXmlFile = new File(Commands.destinationPath+ projectName + analyserName+".xml");
 			if(fXmlFile.exists()) {
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();

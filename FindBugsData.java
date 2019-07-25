@@ -1,4 +1,4 @@
-package com.philips.casestudy;
+
 
 class FindBugsData {
 	String type;

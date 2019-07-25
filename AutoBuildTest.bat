@@ -1,4 +1,4 @@
 @ECHO OFF
-javac -classpath C:\Users\320065410\Downloads\apache_poi\* com\philips\casestudy\*.java
-java -classpath "C:\Users\320065410\Downloads\apache_poi\*;C:\Users\320065410\eclipse-workspace\MyTraining\src" com.philips.casestudy.MainContainer
+javac -classpath C:\apache_poi\* *.java
+java -classpath "C:\apache_poi\*;C:\Static-code-analyzer" MainContainer
 PAUSE

@@ -1,5 +1,3 @@
-package com.philips.casestudy;
-
 class PmdData {
 	String className;
 	String ruleSet;
