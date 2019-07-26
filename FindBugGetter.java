@@ -1,5 +1,4 @@
 
-
 import java.io.File;
 import java.util.ArrayList;
 import javax.xml.parsers.DocumentBuilder;
@@ -36,6 +35,9 @@ class FindBugGetter {
 					Node classname = (Node) eElement.getElementsByTagName("Class").item(0);
 					eElement = (Element) classname;
 					((FindBugsData) f).setClassName(eElement.getAttribute("classname"));
+					Node line=(Node) eElement.getElementsByTagName("SourceLine").item(0);
+					eElement=(Element) line;
+					((FindBugsData) f).setLine(eElement.getAttribute("start"));
 					buglist.add(f);
 				}
 				bg.writeData(buglist, projectName, analyserName);
@@ -46,12 +48,13 @@ class FindBugGetter {
 				ArrayList<PmdData> buglist = new ArrayList<PmdData>();
 				NodeList nList = doc.getElementsByTagName("file");
 				for (int temp = 0; temp < nList.getLength(); temp++) {
-					PmdData f = new PmdData();
 					Node nNode = nList.item(temp);
 					if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 						Element eElement = (Element) nNode;
 						NodeList violations = eElement.getElementsByTagName("violation");
+						//System.out.println(violations.getLength());
 						for (int count = 0; count < violations.getLength(); count++) {
+							PmdData f = new PmdData();
 							Node violationNode = violations.item(count);
 							eElement = (Element) violationNode;
 							f.setClassName(eElement.getAttribute("class"));
@@ -59,6 +62,7 @@ class FindBugGetter {
 							f.setrule(eElement.getAttribute("rule"));
 							f.setLine(eElement.getAttribute("beginline"));
 							f.setContent(eElement.getTextContent());
+							//System.out.println(eElement.getTextContent());
 							buglist.add(f);
 						}
 					}
@@ -68,6 +72,9 @@ class FindBugGetter {
 			}
 			else {
 				System.out.println(analyserName+" file is not created");
+				System.out.println("The possible reasons are :\n");
+				System.out.println("The user didn't install the "+analyserName+" in C: Drive.\n");
+				System.out.println("The user may have installed the different version of "+analyserName+" other than we provided in README file.\n");
 			}
 		}
 
